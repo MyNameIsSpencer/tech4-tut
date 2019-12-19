@@ -63,17 +63,15 @@ Character.prototype.placeAt = function(x, y) {
 
     // calc x & y pixel position
     this.position = [
-        ((tileW * x) +
-        ((tileW - this.dimensions[0]) / 2)),
+        ((tileW * x) + ((tileW - this.dimensions[0]) / 2)),
         ((tileH * y) + ((tileH - this.dimensions[1]) / 2))
     ];
 };
 
 // Character process Movement method
 Character.prototype.processMovement = function(t) {
-    if (this.tileFrom[0] === this.tileTo[0] // <<< if tiles are diff, char is moving
-        && this.tileFrom[1] === this.tileTo[1]) 
-    {
+    // <<< if tiles are diff, char is moving
+    if (this.tileFrom[0] === this.tileTo[0] && this.tileFrom[1] === this.tileTo[1]) {
         return false;  // tiles are diff, char is moving
     }
     // VVV check if time elapsed since char move is >= time move 1 tile
@@ -139,6 +137,8 @@ function drawGame() {
         frameCount = 1;
     } else { frameCount++; }
 
+    
+
     if (!mainChar.processMovement(currentFrameTime)) {
         // check if arrow key pressed, if invalid params, don't allow movement
 
@@ -146,24 +146,28 @@ function drawGame() {
             && mainChar.tileFrom[1] > 0
             && gameMap[toIndex(mainChar.tileFrom[0], mainChar.tileFrom[1] - 1)] === 1)
         {
+            console.warn("UP");
             mainChar.tileTo[1] -= 1;
         }
         else if (keysDown[40]
             && mainChar.tileFrom[1] < (mapH - 1)
             && gameMap[toIndex(mainChar.tileFrom[0], mainChar.tileFrom[1] + 1)] === 1)
         {
+            console.warn("Down");
             mainChar.tileTo[1] += 1;
         }
         else if (keysDown[37]
             && mainChar.tileFrom[0] > 0
             && gameMap[toIndex(mainChar.tileFrom[0] - 1, mainChar.tileFrom[1])] === 1)
         {
+            console.warn("Left");
             mainChar.tileTo[0] -= 1;
         }
         else if (keysDown[39]
             && mainChar.tileFrom[0] < (mapW - 1)
             && gameMap[toIndex(mainChar.tileFrom[0] + 1, mainChar.tileFrom[1])] === 1) 
         {
+            console.warn("Right");
             mainChar.tileTo[0] += 1;
         }
         if (mainChar.tileFrom[0] !== mainChar.tileTo[0]
